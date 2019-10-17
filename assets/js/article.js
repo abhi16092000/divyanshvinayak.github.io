@@ -1,26 +1,28 @@
 jQuery(document).ready(function () {
 
-    jQuery(".play-1, .play-2").yu2fvl();
+    //jQuery(".owl-theme div:eq(2)").addClass("main-show");
+
+
 
     jQuery(".owl-carousel4").owlCarousel(
         {
             loop: true,
             center: true,
-            margin: 20,
+            margin: 0,
             responsiveClass: true,
-            nav: true,
+            nav: false,
             responsive: {
                 0: {
-                    items: 2,
+                    items: 1,
 
                 },
                 600: {
-                    items: 3,
+                    items: 1,
 
                 },
                 1000: {
-                    items: 5,
-                    nav: true,
+                    items: 1,
+
                     loop: true
                 }
             }
@@ -30,28 +32,27 @@ jQuery(document).ready(function () {
     jQuery(".owl-carousel5").owlCarousel(
         {
             loop: true,
-            center: false,
-            margin: 10,
+            center: true,
+            margin: 0,
             responsiveClass: true,
             nav: false,
             responsive: {
                 0: {
-                    items: 2,
+                    items: 1,
 
                 },
                 600: {
-                    items: 3,
+                    items: 1,
 
                 },
                 1000: {
-                    items: 6,
-                    nav: false,
+                    items: 1,
+
                     loop: true
                 }
             }
         }
     );
-
 });
 
 function myFunction(x) {
