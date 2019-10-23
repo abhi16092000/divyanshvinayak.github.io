@@ -1,92 +1,127 @@
-jQuery(document).ready(function () {
+/*
+	Road Trip by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+*/
 
-    jQuery(".play-1, .play-2").yu2fvl();
+(function($) {
 
-    jQuery(".owl-carousel4").owlCarousel(
-        {
-            loop: true,
-            center: true,
-            margin: 20,
-            responsiveClass: true,
-            nav: true,
-            responsive: {
-                0: {
-                    items: 2,
+	skel.breakpoints({
+		xlarge:	'(max-width: 1680px)',
+		large:	'(max-width: 1280px)',
+		medium:	'(max-width: 980px)',
+		small:	'(max-width: 736px)',
+		xsmall:	'(max-width: 480px)'
+	});
 
-                },
-                600: {
-                    items: 3,
+	$(function() {
 
-                },
-                1000: {
-                    items: 5,
-                    nav: true,
-                    loop: true
-                }
-            }
-        }
-    );
+		var	$window = $(window),
+			$body = $('body'),
+			$header = $('#header'),
+			$banner = $('#banner');
 
-    jQuery(".owl-carousel5").owlCarousel(
-        {
-            loop: true,
-            center: false,
-            margin: 10,
-            responsiveClass: true,
-            nav: false,
-            responsive: {
-                0: {
-                    items: 2,
+		var $height = $('#header').height();
 
-                },
-                600: {
-                    items: 3,
+		// Disable animations/transitions until the page has loaded.
+			$body.addClass('is-loading');
 
-                },
-                1000: {
-                    items: 6,
-                    nav: false,
-                    loop: true
-                }
-            }
-        }
-    );
+			$window.on('load', function() {
+				window.setTimeout(function() {
+					$body.removeClass('is-loading');
+				}, 100);
+			});
 
-});
+		// Fix: Placeholder polyfill.
+			$('form').placeholder();
 
-function myFunction(x) {
-    x.classList.toggle("change");
-}
+		// Prioritize "important" elements on medium.
+			skel.on('+medium -medium', function() {
+				$.prioritize(
+					'.important\\28 medium\\29',
+					skel.breakpoint('medium').active
+				);
+			});
 
+		// Banner
 
+			if ($banner.length > 0) {
 
-jQuery(".link-img").click(function () {
-    var link = jQuery(this).attr("data-link");
-    //alert(link);
-    jQuery("#screen").attr("src", link)
-});
+				// IE: Height fix.
+					if (skel.vars.browser == 'ie'
+					&&	skel.vars.IEVersion > 9) {
+
+						skel.on('-small !small', function() {
+							$banner.css('height', '100vh');
+						});
+
+						skel.on('+small', function() {
+							$banner.css('height', '');
+						});
+
+					}
+
+				// More button.
+					$banner.find('.more')
+						.addClass('scrolly');
+
+			}
 
 
+		// Get BG Image
 
-var count = 0;
-jQuery("#toggle-search").click(function () {
-    count++;
-    //even odd click detect 
-    var isEven = function (someNumber) {
-        return (someNumber % 2 === 0) ? true : false;
-    };
-    // on odd clicks do this
-    if (isEven(count) === false) {
-        //jQuery("#nav-search").css({"display":"block"});
-        jQuery("#nav-search").slideDown();
-        jQuery("#toggle-search").attr("src", "assets/images/close.png");
+			if ( $( ".bg-img" ).length ) {
 
-    }
-    // on even clicks do this
-    else if (isEven(count) === true) {
-        //jQuery("#nav-search").css({"display":"none"});
-        jQuery("#nav-search").slideUp();
+				$( ".bg-img" ).each(function() {
 
-        jQuery("#toggle-search").attr("src", "assets/images/search-icon.png");
-    }
-});
+					var post 	= $(this),
+						bg 		= post.data('bg');
+
+					post.css( 'background-image', 'url(images/' + bg + ')' );
+
+				});
+
+
+			}
+
+		// Posts
+
+			$( ".post" ).each( function() {
+				var p = $(this),
+					i = p.find('.inner'),
+					m = p.find('.more');
+
+				m.addClass('scrolly');
+
+				p.scrollex({
+					top: '40vh',
+					bottom: '40vh',
+					terminate: 	function() { m.removeClass('current'); i.removeClass('current'); },
+					enter: 		function() { m.addClass('current'); i.addClass('current'); },
+					leave: 		function() { m.removeClass('current'); i.removeClass('current'); }
+				});
+
+			});
+
+		// Scrolly.
+			if ( $( ".scrolly" ).length ) {
+
+				$('.scrolly').scrolly();
+			}
+
+		// Menu.
+			$('#menu')
+				.append('<a href="#menu" class="close"></a>')
+				.appendTo($body)
+				.panel({
+					delay: 500,
+					hideOnClick: true,
+					hideOnSwipe: true,
+					resetScroll: true,
+					resetForms: true,
+					side: 'right'
+				});
+
+	});
+
+})(jQuery);
